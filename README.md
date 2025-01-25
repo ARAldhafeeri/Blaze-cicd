@@ -86,14 +86,14 @@ project:
   name: "your-project-name"
   namespace: "your-namespace"
   argocd:
-    apiKey: "{{ .Env.ARGOCD_API_KEY }}"
+    apiKey: "your-argocd-api-key"
     url: "https://argocd.example.com"
   dockerHub:
-    username: "{{ .Env.DOCKER_HUB_USERNAME }}"
-    apiKey: "{{ .Env.DOCKER_HUB_API_KEY }}"
+    username: "your-docker-registery-username"
+    apiKey: "your-docker-registery-apikey"
   github:
-    apiKey: "{{ .Env.GITHUB_API_KEY }}"
-    privateKey: "{{ .Env.GITHUB_PRIVATE_KEY }}"
+    apiKey: "your-github-developer-apikey"
+    privateKey: "your-ssh-key"
 apps:
   - name: "your-app-name"
     templates:
