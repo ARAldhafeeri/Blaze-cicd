@@ -79,15 +79,6 @@ Before using Blazer CI/CD, ensure the following prerequisites are met:
 
 ## User Input
 
-The user provides the following information:
-
-- **Project Name**: Name of the project.
-- **Namespace**: Namespace to be used to create the project.
-- **DockerHub API Key**: API key for DockerHub to create repositories for the project in the registry.
-- **GitHub API Key**: API key for GitHub.
-- **GitHub Private Key**: GitHub Private key used to create application repos inside argocd.
-- **ArgoCD API Key**: API key for ArgoCD.
-
 The user also creates a YAML file with the following format:
 
 ```yaml
