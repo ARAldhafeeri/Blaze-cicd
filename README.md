@@ -1,11 +1,30 @@
 # Blaze-cicd
-Blazer CI/CD is a Command Line Interface (CLI) tool designed to automate the creation of production-ready CI/CD pipelines. 
 
-# Blazer CI/CD CLI Tool
+<div align="center">
+  <img src="blaze-cicd.png" alt="Blazer CI/CD Logo" width="200" style="border-radius: 50%;"/>
+</div>
+
+Blazer CI/CD is a Command Line Interface (CLI) tool designed to automate the creation of production-ready CI/CD pipelines.
 
 ## Overview
 
 Blazer CI/CD is a Command Line Interface (CLI) tool designed to automate the creation of production-ready CI/CD pipelines. The tool integrates with Kubernetes, Docker, DockerHub, GitHub, GitHub Actions, and ArgoCD to provide a seamless setup experience. Users provide essential details such as project name, API keys, and application configurations, and the tool handles the creation of namespaces, repositories, and CI/CD pipelines.
+
+## Installation
+
+You can install the Blazer CI/CD CLI tool using pip:
+
+```bash
+pip install blazer-cicd
+```
+
+## Architecture Diagram
+
+Below is a high-level architecture diagram of Blazer CI/CD:
+
+<div align="center">
+  <img src="diagram.png" alt="Blazer CI/CD Architecture Diagram" width="600" style="border: 1px solid #ccc; border-radius: 8px;"/>
+</div>
 
 ## Key Features
 
@@ -24,6 +43,40 @@ Blazer CI/CD is a Command Line Interface (CLI) tool designed to automate the cre
 - **GitHub Actions**: For CI/CD workflows.
 - **ArgoCD**: For GitOps-based continuous delivery.
 
+## Prerequisites
+
+Before using Blazer CI/CD, ensure the following prerequisites are met:
+
+1. **Kubernetes Cluster**:
+
+   - A running Kubernetes cluster with `kubectl` configured on the machine you plan to run this CLI tool from.
+   - Ensure you have the necessary permissions to create namespaces and manage resources in the cluster.
+
+2. **DockerHub Account**:
+
+   - A DockerHub account with an API key for creating and managing Docker repositories, with write/read access.
+
+3. **GitHub Account**:
+
+   - A GitHub account with an API key for creating repositories and managing GitHub Actions workflows.
+   - A GitHub private key for integrating with ArgoCD config repositories.
+
+4. **ArgoCD**:
+
+   - An ArgoCD instance with an API key account for creating projects and applications.
+   - Ensure the ArgoCD URL is accessible from the machine where you plan to run the tool from.
+
+5. **Python**:
+
+   - Python 3.7 or higher installed on your machine.
+   - Required Python libraries: `argparse`, `yaml`, `subprocess`, and `requests`.
+
+6. **Blazer CI/CD Installation**:
+   - Install the Blazer CI/CD CLI tool using pip:
+     ```bash
+     pip install blazer-cicd
+     ```
+
 ## User Input
 
 The user provides the following information:
@@ -39,18 +92,44 @@ The user also creates a YAML file with the following format:
 
 ```yaml
 project:
-  name: 
-  namespace: 
-  ArgoCDAPIKey: 
-  GithubAPIKey: 
-  GitHubPrivateKey:
-  DockerHubAPIKey: 
-  ArgoCDURL: 
+  name: "your-project-name"
+  namespace: "your-namespace"
+  argocd:
+    apiKey: "{{ .Env.ARGOCD_API_KEY }}"
+    url: "https://argocd.example.com"
+  dockerHub:
+    username: "{{ .Env.DOCKER_HUB_USERNAME }}"
+    apiKey: "{{ .Env.DOCKER_HUB_API_KEY }}"
+  github:
+    apiKey: "{{ .Env.GITHUB_API_KEY }}"
+    privateKey: "{{ .Env.GITHUB_PRIVATE_KEY }}"
 apps:
-  - name: 
-    repo: 
-    template-source: 
-    template-argocd: 
+  - name: "your-app-name"
+    templates:
+      source: "source-code-github-template"
+      argocd: "argocd-application-config-files-template"
+    docker:
+      isPrivate: true # true -> private repo , false -> public repo.
+      name: "your-docker-image-name"
+    github:
+      isPrivate: true
+      name: "your-github-repo-name"
+    argocd:
+      project:
+        name: "your-argocd-project-name"
+        description: "Your ArgoCD project description"
+      app:
+        name: "your-argocd-app-name"
+        projectName: "your-argocd-project-name"
+        path: "path/to/manifests"
+        clusterUrl: "https://kubernetes.default.svc"
+        namespace: "your-namespace"
+      repo:
+        connectionType: "ssh"
+        name: "your-repo-name"
+        projectName: "your-project-name"
+        githubRepoUrl: "git@github.com:your-org/your-repo.git"
+        sshPrivateKeyData: "{{ .Env.SSH_PRIVATE_KEY }}"
 ```
 
 ## Workflow
@@ -74,88 +153,9 @@ apps:
 - **Purpose**: Reads the YAML configuration and creates the CI/CD pipeline.
 - **Usage**: `blazer build --file blazer-config.yaml`
 - **Output**:
-  - Creates a Kubernetes namespace.
+  - Creates a Kubernetes namespace using current context configured to kubectl.
   - Creates DockerHub repositories.
   - Creates GitHub repositories.
   - Configures repositories in ArgoCD.
   - Creates an ArgoCD project.
   - Creates ArgoCD applications.
-
-## Implementation Details
-
-### Python Script: `main.py`
-
-The Python script uses the following libraries:
-
-- **argparse**: For parsing command-line arguments.
-- **yaml**: For reading and writing YAML files.
-- **subprocess**: For executing shell commands (e.g., `kubectl`).
-- **requests**: For making HTTP requests to external APIs (e.g., DockerHub, GitHub, ArgoCD).
-
-### Key Functions
-
-- **`init_command(file)`**:
-  - Generates a YAML template file if it doesn't already exist.
-  - Outputs a message indicating the file has been created.
-
-- **`create_dockerhub_repo(repo_name, api_key)`**:
-  - Makes an API call to DockerHub to create a new repository.
-  - Handles the response and prints success or failure messages.
-
-- **`create_github_repo(repo_name, api_key)`**:
-  - Makes an API call to GitHub to create a new repository.
-  - Handles the response and prints success or failure messages.
-
-- **`create_argocd_project(project_name, api_key)`**:
-  - Makes an API call to ArgoCD to create a new project.
-  - Handles the response and prints success or failure messages.
-
-- **`configure_argocd_repos(file)`**:
-  - The ArgoCD GitHub repos will be synced as repositories inside ArgoCD.
-
-- **`create_argocd_app(app_name, repo_url, template_source, template_argocd, api_key)`**:
-  - Makes an API call to ArgoCD to create a new application.
-  - Handles the response and prints success or failure messages.
-
-- **`build_command(file)`**:
-  - Reads the YAML configuration file.
-  - Executes the necessary steps to create the CI/CD pipeline:
-    - Creates a Kubernetes namespace.
-    - Creates DockerHub repositories.
-    - Creates GitHub repositories.
-    - Creates an ArgoCD project.
-    - Creates ArgoCD applications.
-
-## Example Output
-
-When the user runs the `build` command, the following output is expected:
-
-```
-Creating namespace using kubectl...DONE
-Creating Docker Repos...DONE
-Creating GitHub Repos...DONE
-Creating ArgoCD Project...DONE
-Creating ArgoCD App...DONE
-```
-
-## Error Handling
-
-- **File Existence**: The script checks if the YAML file exists before attempting to read or write.
-- **API Responses**: The script checks the status codes of API responses and prints appropriate success or failure messages.
-- **Subprocess Execution**: The script uses `subprocess.run` with `check=True` to ensure that shell commands (e.g., `kubectl`) execute successfully.
-
-## Installation
-
-You can install the Blazer CI/CD CLI tool using pip:
-
-```bash
-pip install blazer-cicd
-```
-
-## Conclusion
-
-Blazer CI/CD CLI tool simplifies the setup of production-ready CI/CD pipelines by automating the creation of necessary resources across multiple platforms. The tool is designed to be extensible, allowing for future enhancements and integrations with additional services.
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request on the [GitHub repository](https://github.com/ARAldhafeeri/Blaze-cicd).
