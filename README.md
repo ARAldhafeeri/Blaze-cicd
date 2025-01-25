@@ -1,29 +1,29 @@
 # Blaze-cicd
 
 <div align="center">
-  <img src="blaze-cicd.png" alt="Blazer CI/CD Logo" width="200" style="border-radius: 50%;"/>
+  <img src="blaze-cicd.png" alt="Blaze CI/CD Logo" width="200" style="border-radius: 50%;"/>
 </div>
 
-Blazer CI/CD is a Command Line Interface (CLI) tool designed to automate the creation of production-ready CI/CD pipelines.
+Blaze CI/CD is a Command Line Interface (CLI) tool designed to automate the creation of production-ready CI/CD pipelines.
 
 ## Overview
 
-Blazer CI/CD is a Command Line Interface (CLI) tool designed to automate the creation of production-ready CI/CD pipelines. The tool integrates with Kubernetes, Docker, DockerHub, GitHub, GitHub Actions, and ArgoCD to provide a seamless setup experience. Users provide essential details such as project name, API keys, and application configurations, and the tool handles the creation of namespaces, repositories, and CI/CD pipelines.
+Blaze CI/CD is a Command Line Interface (CLI) tool designed to automate the creation of production-ready CI/CD pipelines. The tool integrates with Kubernetes, Docker, DockerHub, GitHub, GitHub Actions, and ArgoCD to provide a seamless setup experience. Users provide essential details such as project name, API keys, and application configurations, and the tool handles the creation of namespaces, repositories, and CI/CD pipelines.
 
 ## Installation
 
-You can install the Blazer CI/CD CLI tool using pip:
+You can install the Blaze CI/CD CLI tool using pip:
 
 ```bash
-pip install blazer-cicd
+pip install blaze-cicd
 ```
 
 ## Architecture Diagram
 
-Below is a high-level architecture diagram of Blazer CI/CD:
+Below is a high-level architecture diagram of blaze CI/CD:
 
 <div align="center">
-  <img src="diagram.png" alt="Blazer CI/CD Architecture Diagram" width="600" style="border: 1px solid #ccc; border-radius: 8px;"/>
+  <img src="diagram.png" alt="Blaze CI/CD Architecture Diagram" width="600" style="border: 1px solid #ccc; border-radius: 8px;"/>
 </div>
 
 ## Key Features
@@ -45,7 +45,7 @@ Below is a high-level architecture diagram of Blazer CI/CD:
 
 ## Prerequisites
 
-Before using Blazer CI/CD, ensure the following prerequisites are met:
+Before using blaze CI/CD, ensure the following prerequisites are met:
 
 1. **Kubernetes Cluster**:
 
@@ -71,10 +71,10 @@ Before using Blazer CI/CD, ensure the following prerequisites are met:
    - Python 3.7 or higher installed on your machine.
    - Required Python libraries: `argparse`, `yaml`, `subprocess`, and `requests`.
 
-6. **Blazer CI/CD Installation**:
-   - Install the Blazer CI/CD CLI tool using pip:
+6. **blaze CI/CD Installation**:
+   - Install the blaze CI/CD CLI tool using pip:
      ```bash
-     pip install blazer-cicd
+     pip install blaze-cicd
      ```
 
 ## User Input
@@ -136,13 +136,13 @@ apps:
 ### `init` Command
 
 - **Purpose**: Generates a YAML template for the user to fill in.
-- **Usage**: `blazer init --file blazer-config.yaml`
-- **Output**: Creates a `blazer-config.yaml` file with the predefined template.
+- **Usage**: `blaze init --file blaze-config.yaml`
+- **Output**: Creates a `blaze-config.yaml` file with the predefined template.
 
 ### `build` Command
 
 - **Purpose**: Reads the YAML configuration and creates the CI/CD pipeline.
-- **Usage**: `blazer build --file blazer-config.yaml`
+- **Usage**: `blaze build --file blaze-config.yaml`
 - **Output**:
   - Creates a Kubernetes namespace using current context configured to kubectl.
   - Creates DockerHub repositories.

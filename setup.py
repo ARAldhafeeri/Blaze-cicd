@@ -18,7 +18,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "blazer=blaze_cicd.cli:main", 
+            "blaze=blaze_cicd.cli:main", 
         ],
     },
     long_description=long_description,
