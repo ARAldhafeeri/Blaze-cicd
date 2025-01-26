@@ -1,5 +1,6 @@
 YAML_TEMPLATE = """
 project:
+project:
   name: "your-project-name"
   namespace: "your-namespace"
   argocd:
@@ -11,17 +12,18 @@ project:
   github:
     apiKey: "your-github-developer-apikey"
     privateKey: "your-ssh-key"
+
 apps:
   - name: "your-app-name"
     templates:
-      source: 
+      source:
         name: "source-code-github-template-name"
-        owner:"source-code-github-owner-name"
-      argocd: 
+        owner: "source-code-github-owner-name"
+      argocd:
         name: "source-code-github-template-name"
-        owner:"source-code-github-owner-name"
+        owner: "source-code-github-owner-name"
     docker:
-      private: true # true -> private repo , false -> public repo.
+      private: true # true -> private repo, false -> public repo
       name: "your-docker-image-name"
     github:
       private: true
