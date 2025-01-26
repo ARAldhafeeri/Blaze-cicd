@@ -137,7 +137,7 @@ apps:
 4. **Configuration**: The user fills in the YAML file with project and application details.
 5. **Build**: The user runs the `build` command to create the CI/CD pipeline.
 
-Important note: your tempalte repo should not have any github workflow in it, you should manually commit that after reviewing everything, to avoid accediental creation of unneeded resources, as well you might need to add developer token to update argocd repos with image tag.
+Important note: your tempalte repo should not have any github workflow in it, argocd is fine to have data in it but ideally none. This allows for no accedental creation of resources.
 
 ## CLI Commands
 
