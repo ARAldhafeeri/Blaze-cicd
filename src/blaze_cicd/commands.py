@@ -6,7 +6,7 @@ from blaze_cicd.data import YAML_TEMPLATE
 from blaze_cicd.github import create_github_repo
 from blaze_cicd.argocd import create_argocd_app, create_argocd_project
 from blaze_cicd.docker import create_dockerhub_repo
-
+from blaze_cicd.kubectl import  kubectl_create_project_namespace
 def init_command(file: str) -> None:
     """Initialize the configuration file."""
     if os.path.exists(file):
@@ -31,12 +31,7 @@ def build_command(file: str) -> None:
 
     # Create Kubernetes Namespace
     blaze_logger.info("Creating namespace using kubectl...")
-    try:
-        subprocess.run(["kubectl", "create", "namespace", project["namespace"]], check=True)
-        blaze_logger.info("Namespace created successfully.")
-    except subprocess.CalledProcessError as e:
-        blaze_logger.error(f"Failed to create namespace: {e}")
-        return
+    kubectl_create_project_namespace(project["namespace"])
 
     # Create Docker Repos
     blaze_logger.info("Creating Docker Repos...")
@@ -44,7 +39,7 @@ def build_command(file: str) -> None:
         create_dockerhub_repo(
             app["docker"]["name"],
             project["dockerHub"]["username"],
-            app["docker"]["isPrivate"],
+            app["docker"]["private"],
             project["dockerHub"]["apiKey"]
         )
 
@@ -53,14 +48,21 @@ def build_command(file: str) -> None:
     for app in apps:
         create_github_repo(
             app["github"]["name"],
-            app["github"]["isPrivate"],
-            project["github"]["apiKey"]
+            app["github"]["owner"],
+            app["github"]["private"],
+            project["github"]["apiKey"],
+            project["github"]["apiKey"],
+            apps["templates"]["source"]["name"],
+            apps["templates"]["source"]["owner"],
+            apps["templates"]["argocd"]["name"],
+            apps["templates"]["argocd"]["owner"],
         )
 
     # Create ArgoCD Project
     blaze_logger.info("Creating ArgoCD Project...")
     create_argocd_project(
         project["argocd"]["project"]["name"],
+         project["argocd"]["project"]["description"],
         project["argocd"]["apiKey"],
         project["argocd"]["url"]
     )
@@ -74,5 +76,6 @@ def build_command(file: str) -> None:
             app["argocd"]["app"]["path"],
             app["argocd"]["app"]["projectName"],
             project["argocd"]["apiKey"],
-            project["argocd"]["url"]
+            project["argocd"]["url"],
+            app["argocd"]["namespace"]
         )

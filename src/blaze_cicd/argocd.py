@@ -1,7 +1,7 @@
 import requests 
 from blaze_cicd import blaze_logger
 
-def create_argocd_app(name: str, repo_url: str, server: str,  path: str, project_name: str, api_key: str, argocd_url: str) -> None:
+def create_argocd_app(name: str, repo_url: str, server: str,  path: str, project_name: str, api_key: str, argocd_url: str, namespace: str) -> None:
     """Create an ArgoCD application."""
     url = f"{argocd_url}/api/v1/applications"
     headers = {
@@ -15,15 +15,21 @@ def create_argocd_app(name: str, repo_url: str, server: str,  path: str, project
         "spec": {
             "source": {
                 "repoURL": repo_url,
-                "path": path
+                "path": path,
+                "targetRevision": "HEAD"
+
             },
             "destination": {
                 "namespace": "default",
-                "server": server
+                "server": server,
+                "namespace": namespace
             },
             "project": project_name,
             "syncPolicy": {
-                "automated": {}
+                "automated": {
+                    "purne": False, 
+                    "selfHeal": True
+                }
             }
         }
     }

@@ -33,6 +33,9 @@ Below is a high-level architecture diagram of blaze CI/CD:
 - **Multi-Service Integration**: Integrates with DockerHub, GitHub, and ArgoCD to create repositories, projects, and applications. Can handle pipelines for multiple services.
 - **CLI Interface**: Simple command-line interface with `init` and `build` commands.
 - **Minimal Setup**: Other than configuring `kubectl`, Python, installing the package, and providing API keys, there are no additional steps other than filling out the `config.yaml`.
+- **Graceful Degradation**: Blaze CI/CD ensures robust pipeline creation by verifying the existence of resources at each step. If a resource (e.g., repository, project, or application) already exists, Blaze skips its creation to avoid redundancy. If a resource is missing, it creates it automatically.
+
+In case of failure, Blaze stops the process and provides detailed error messages, enabling users to troubleshoot and resolve issues efficiently. This step-by-step approach ensures that subsequent operations rely on successful completion of the previous steps, maintaining the integrity of the CI/CD pipeline while empowering users with actionable insights.
 
 ## Targeted Stack
 
@@ -97,14 +100,17 @@ project:
 apps:
   - name: "your-app-name"
     templates:
-      source: "source-code-github-template"
-      argocd: "argocd-application-config-files-template"
+      source: "source-code-github-template-name"
+      sourceTemplateOwnerName: "source-owner-name"
+      argocd: "argocd-application-config-files-template-name"
+      argocdTemplateOwnerName: "argocd-owner-name"
     docker:
-      isPrivate: true # true -> private repo , false -> public repo.
+      private: true # true -> private repo , false -> public repo.
       name: "your-docker-image-name"
     github:
-      isPrivate: true
+      private: true
       name: "your-github-repo-name"
+      owner: "your-github-repo-owner-name"
     argocd:
       project:
         name: "your-argocd-project-name"
@@ -130,6 +136,8 @@ apps:
 3. Kubernetes Cluster with configured kubectl on machine.
 4. **Configuration**: The user fills in the YAML file with project and application details.
 5. **Build**: The user runs the `build` command to create the CI/CD pipeline.
+
+Important note: your tempalte repo should not have any github workflow in it, you should manually commit that after reviewing everything, to avoid accediental creation of unneeded resources, as well you might need to add developer token to update argocd repos with image tag.
 
 ## CLI Commands
 

@@ -3,24 +3,30 @@ project:
   name: "your-project-name"
   namespace: "your-namespace"
   argocd:
-    apiKey: "{{ .Env.ARGOCD_API_KEY }}"
+    apiKey: "your-argocd-api-key"
     url: "https://argocd.example.com"
   dockerHub:
-    username: "{{ .Env.DOCKER_HUB_USERNAME }}"
-    apiKey: "{{ .Env.DOCKER_HUB_API_KEY }}"
+    username: "your-docker-registery-username"
+    apiKey: "your-docker-registery-apikey"
   github:
-    apiKey: "{{ .Env.GITHUB_API_KEY }}"
-    privateKey: "{{ .Env.GITHUB_PRIVATE_KEY }}"
+    apiKey: "your-github-developer-apikey"
+    privateKey: "your-ssh-key"
 apps:
   - name: "your-app-name"
     templates:
-      source: "git"
+      source: 
+        name: "source-code-github-template-name"
+        owner:"source-code-github-owner-name"
+      argocd: 
+        name: "source-code-github-template-name"
+        owner:"source-code-github-owner-name"
     docker:
-      isPrivate: true
+      private: true # true -> private repo , false -> public repo.
       name: "your-docker-image-name"
     github:
-      isPrivate: true
+      private: true
       name: "your-github-repo-name"
+      owner: "your-github-repo-owner-name"
     argocd:
       project:
         name: "your-argocd-project-name"
@@ -36,5 +42,9 @@ apps:
         name: "your-repo-name"
         projectName: "your-project-name"
         githubRepoUrl: "git@github.com:your-org/your-repo.git"
-        sshPrivateKeyData: "{{ .Env.SSH_PRIVATE_KEY }}"
+        sshPrivateKeyData: "your-github-account-ssh-key-to-pull-private-repos"
 """
+
+DOCKER_APIS_BASE_URL = "https://hub.docker.com/v2"
+GITHUB_APIS_BASE_URL = "https://api.github.com"
+GITHUB_BASE_URL = "https://github.com"
