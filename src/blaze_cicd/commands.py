@@ -52,10 +52,10 @@ def build_command(file: str) -> None:
             app["github"]["private"],
             project["github"]["apiKey"],
             project["github"]["apiKey"],
-            apps["templates"]["source"]["name"],
-            apps["templates"]["source"]["owner"],
-            apps["templates"]["argocd"]["name"],
-            apps["templates"]["argocd"]["owner"],
+            app["templates"]["source"]["name"],
+            app["templates"]["source"]["owner"],
+            app["templates"]["argocd"]["name"],
+            app["templates"]["argocd"]["owner"],
         )
 
     # Create ArgoCD Project
