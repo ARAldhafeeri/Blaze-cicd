@@ -5,7 +5,6 @@ from blaze_cicd.data import DOCKER_APIS_BASE_URL
 def create_dockerhub_repo(repo_name: str, docker_hub_username: str, is_private: bool, api_key: str) -> None:
     """Create a DockerHub repository if repository does not exists for the given namespace, else skip the creation and log."""
     repository_exists = dockerhub_repo_exists(repo_name, docker_hub_username, api_key)
-
     if repository_exists:
         return 
     

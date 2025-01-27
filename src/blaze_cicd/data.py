@@ -1,27 +1,26 @@
 YAML_TEMPLATE = """
 project:
-project:
   name: "your-project-name"
   namespace: "your-namespace"
   argocd:
-    apiKey: "your-argocd-api-key"
-    url: "https://argocd.example.com"
+    apiKey: "%ARGOCD_API_KEY%"
+    url: "%ARGOCD_URL%"        
   dockerHub:
     username: "your-docker-registery-username"
-    apiKey: "your-docker-registery-apikey"
+    apiKey: "%DOCKER_HUB_API_KEY%" 
   github:
-    apiKey: "your-github-developer-apikey"
-    privateKey: "your-ssh-key"
+    apiKey: "%GITHUB_API_KEY%"     
+    privateKey: "%GITHUB_SSH_PRIVATE_KEY%"  
 
 apps:
   - name: "your-app-name"
     templates:
       source:
-        name: "source-code-github-template-name"
-        owner: "source-code-github-owner-name"
+        name: "blaze-cicd-react-template"
+        owner: "araldhafeeri"
       argocd:
-        name: "source-code-github-template-name"
-        owner: "source-code-github-owner-name"
+        name: "blaze-cicd-argocd-template"
+        owner: "araldhafeeri"
     docker:
       private: true # true -> private repo, false -> public repo
       name: "your-docker-image-name"
@@ -35,16 +34,13 @@ apps:
         description: "Your ArgoCD project description"
       app:
         name: "your-argocd-app-name"
-        projectName: "your-argocd-project-name"
         path: "path/to/manifests"
         clusterUrl: "https://kubernetes.default.svc"
         namespace: "your-namespace"
       repo:
         connectionType: "ssh"
         name: "your-repo-name"
-        projectName: "your-project-name"
         githubRepoUrl: "git@github.com:your-org/your-repo.git"
-        sshPrivateKeyData: "your-github-account-ssh-key-to-pull-private-repos"
 """
 
 DOCKER_APIS_BASE_URL = "https://hub.docker.com/v2"

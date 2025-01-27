@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="blaze-cicd",
-    version="1.0.2",
+    version="1.0.7",
     description="A CLI tool for managing CI/CD pipelines with Docker, GitHub, and ArgoCD.",
     author="Ahmed Rakan",
     author_email="ar.aldhafeeri11@gmail.com",
@@ -14,7 +14,8 @@ setup(
     package_dir={"": "src"},  # Specify the root of the packages
     install_requires=[
         "requests>=2.31.0", 
-        "PyYAML>=6.0.0",  
+        "PyYAML>=6.0.0",
+        "pynacl==1.5.0"
     ],
     entry_points={
         "console_scripts": [

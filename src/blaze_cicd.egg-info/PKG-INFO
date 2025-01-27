@@ -1,3 +1,35 @@
+Metadata-Version: 2.2
+Name: blaze-cicd
+Version: 1.0.7
+Summary: A CLI tool for managing CI/CD pipelines with Docker, GitHub, and ArgoCD.
+Author: Ahmed Rakan
+Author-email: ar.aldhafeeri11@gmail.com
+Project-URL: Source, https://github.com/yourusername/blaze-cicd
+Project-URL: Bug Reports, https://github.com/araldhafeeri/blaze-cicd/issues
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.31.0
+Requires-Dist: PyYAML>=6.0.0
+Requires-Dist: pynacl==1.5.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: project-url
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
 # Blaze-cicd
 
 <div align="center">
@@ -160,12 +192,6 @@ export GITHUB_SSH_PRIVATE_KEY="your-ssh-key"
 export ARGOCD_SSH_PRIVATE_KEY="your-github-account-ssh-key-to-pull-private-repos"
 ```
 
-You should also create dkr registery secret in your k8s cluster :
-
-```bash
- kubectl -n blazecicd create secret docker-registry dkr-registry --docker-server=docker.io --docker-username=araldhafeeri --docker-password="" --docker-email=ar.aldhafeeri11@gmail.com
-```
-
 ## Workflow
 
 1. **Initialization**: The user runs the `init` command to generate a YAML template which the user will fill with the needed information.
@@ -195,9 +221,3 @@ Important note: your tempalte repo should not have any github workflow in it, or
   - Configures repositories in ArgoCD.
   - Creates an ArgoCD project.
   - Creates ArgoCD applications.
-
-## DEMO
-
-## DEMO cleanup checklist :
-
-- [] delete repos :
