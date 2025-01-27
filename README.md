@@ -163,7 +163,7 @@ export ARGOCD_SSH_PRIVATE_KEY="your-github-account-ssh-key-to-pull-private-repos
 You should also create dkr registery secret in your k8s cluster :
 
 ```bash
- kubectl -n blazecicd create secret docker-registry dkr-registry --docker-server=docker.io --docker-username=araldhafeeri --docker-password="" --docker-email=ar.aldhafeeri11@gmail.com
+ kubectl -n blazecicd create secret docker-registry dkr-registry --docker-server=docker.io --docker-username="" --docker-password="" --docker-email=""
 ```
 
 ## Workflow
