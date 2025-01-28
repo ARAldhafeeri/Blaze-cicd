@@ -36,5 +36,5 @@ def dockerhub_repo_exists(repo_name: str, docker_hub_username: str, api_key: str
         blaze_logger.info(f"Repository with name {repo_name} in namespace {docker_hub_username} already exists skipping creation process!")
         return True
     else:
-        blaze_logger.error(f"Repository with name {repo_name} in namespace {docker_hub_username} deos not exists, creating repository..")
+        blaze_logger.info(f"Repository with name {repo_name} in namespace {docker_hub_username} deos not exists, creating repository..")
         return False

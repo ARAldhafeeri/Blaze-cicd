@@ -1,2 +1,0 @@
-[console_scripts]
-blaze = blaze_cicd.cli:main

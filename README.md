@@ -200,4 +200,9 @@ Important note: your tempalte repo should not have any github workflow in it, or
 
 ## DEMO cleanup checklist :
 
-- [] delete repos :
+if you followed the demo, you might want to clean up the resources in the dev cluster
+
+- [] remove created repos by blaze-cicd : 1. blazecicd-client, 2. blazecicd-client-argocd.
+- [] remove argocd resources application, project, repo.
+- [] remove dockerhub repository blazecicd-client
+- [] remove namespace from cluster.

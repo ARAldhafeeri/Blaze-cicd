@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="blaze-cicd",
-    version="1.0.7",
+    version="1.0.8",
     description="A CLI tool for managing CI/CD pipelines with Docker, GitHub, and ArgoCD.",
     author="Ahmed Rakan",
     author_email="ar.aldhafeeri11@gmail.com",
